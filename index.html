@@ -3,413 +3,304 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>AKS Nails</title>
+<title>Nails SNG</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#0f1117;
-  --bg2:#1a1f2e;
-  --bg3:#252d3d;
-  --bg4:#2d3748;
-  --accent:#7c3aed;
-  --accent2:#ec4899;
-  --text:#e2e8f0;
-  --text2:#94a3b8;
-  --text3:#64748b;
-  --border:#2d3748;
-  --success:#22c55e;
-  --danger:#ef4444;
+  --bg:#07070a;
+  --bg2:#0f0f14;
+  --bg3:#161620;
+  --bg4:#1e1e2a;
+  --border:#ffffff0d;
+  --border2:#ffffff18;
+  --text:#f0f0f8;
+  --text2:#8888a8;
+  --text3:#44445a;
+  --acc:#c084fc;
+  --acc2:#f472b6;
+  --green:#34d399;
+  --red:#f87171;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;overflow-x:hidden}
-body{padding-bottom:75px}
+html,body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+body{padding-bottom:80px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.app{position:relative;z-index:1;max-width:430px;margin:0 auto}
 
-/* scrollbar */
-::-webkit-scrollbar{width:0}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;pointer-events:none}
-.toast.show{opacity:1}
-
-/* ── SCREENS ── */
-.screen{display:none;animation:fadeIn .2s ease}
+/* SCREENS */
+.screen{display:none;animation:fadeUp .2s ease both}
 .screen.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── NAV ── */
-.nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:.5px solid var(--border);display:flex;justify-content:space-around;padding:8px 0 20px;z-index:100}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--text3);cursor:pointer;padding:0 12px;transition:color .15s}
-.nav-item.active{color:var(--accent)}
-.nav-item svg{width:22px;height:22px}
+/* NAV */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--bg2);border-top:.5px solid var(--border);display:flex;justify-content:space-around;padding:10px 0 22px;z-index:100}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--text3);cursor:pointer;padding:0 16px;transition:color .15s;font-family:'DM Sans',sans-serif}
+.ni.active{color:var(--acc)}
+.ni svg{width:22px;height:22px}
 
-/* ── TOP BAR ── */
-.top-bar{display:flex;justify-content:space-between;align-items:center;padding:16px 16px 8px}
-.top-bar h1{font-size:18px;font-weight:600}
-.top-bar p{font-size:12px;color:var(--text2);margin-top:2px}
-.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0}
+/* HOME */
+.hero{padding:32px 20px 24px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,#c084fc15,transparent 70%);top:-60px;left:50%;transform:translateX(-50%);pointer-events:none}
+.hero-avatar{width:72px;height:72px;border-radius:22px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:26px;font-weight:600;color:#fff;margin:0 auto 14px;letter-spacing:-.02em}
+.hero-name{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:500;color:var(--text);letter-spacing:-.02em;margin-bottom:4px}
+.hero-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
+.hero-btn{background:linear-gradient(135deg,#7c3aed,#ec4899);border:none;border-radius:14px;padding:14px 32px;font-size:15px;font-weight:500;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;width:100%;transition:opacity .15s;letter-spacing:.01em}
+.hero-btn:active{opacity:.85}
 
-/* ── HERO ── */
-.hero{margin:0 12px 16px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:18px;padding:20px;position:relative;overflow:hidden}
-.hero::after{content:'💅';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:48px;opacity:.3}
-.hero h2{font-size:17px;font-weight:600;margin-bottom:4px}
-.hero p{font-size:12px;opacity:.85;line-height:1.5}
-.hero-btn{display:inline-block;background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border-radius:20px;padding:8px 18px;font-size:13px;color:#fff;margin-top:12px;cursor:pointer;border:none;font-weight:500}
-
-/* ── SECTION TITLE ── */
-.sec-title{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;padding:4px 16px 8px;display:flex;justify-content:space-between;align-items:center}
-.sec-title span{font-size:12px;color:var(--accent);text-transform:none;letter-spacing:0;cursor:pointer}
-
-/* ── SERVICE CARDS ── */
-.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 8px}
-.svc{background:var(--bg3);border-radius:14px;padding:14px;border:.5px solid var(--border);cursor:pointer;transition:border-color .15s,transform .1s}
-.svc:active{transform:scale(.97)}
-.svc.selected{border-color:var(--accent);background:#1e1a35}
-.svc-emoji{font-size:24px;margin-bottom:8px}
+.sec-label{font-size:10px;font-weight:500;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:16px 20px 8px}
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 8px}
+.svc-card{background:var(--bg2);border:.5px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:border-color .15s}
+.svc-card:active{transform:scale(.98)}
+.svc-emoji{font-size:22px;margin-bottom:8px}
 .svc-name{font-size:13px;font-weight:500;color:var(--text)}
-.svc-price{font-size:12px;color:#a78bfa;margin-top:3px}
+.svc-price{font-size:12px;color:var(--acc);margin-top:3px}
 .svc-time{font-size:11px;color:var(--text3);margin-top:2px}
 
-/* ── PROMO BANNER ── */
-.promo-banner{margin:0 12px 16px;background:var(--bg3);border-radius:14px;padding:14px;border:.5px solid #3b3d6e;display:flex;align-items:center;gap:12px}
-.promo-icon{font-size:28px;flex-shrink:0}
-.promo-text h3{font-size:13px;font-weight:500}
-.promo-text p{font-size:11px;color:var(--text2);margin-top:3px}
+/* BOOKING */
+.booking-header{padding:20px 20px 8px}
+.booking-title{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:500;color:var(--text);letter-spacing:-.02em}
+.booking-sub{font-size:13px;color:var(--text2);margin-top:3px}
 
-/* ── REVIEWS ── */
-.review-card{background:var(--bg3);border-radius:14px;padding:14px;margin:0 12px 8px;border:.5px solid var(--border)}
-.review-stars{color:#f59e0b;font-size:14px;margin-bottom:6px}
-.review-text{font-size:13px;color:var(--text2);line-height:1.5}
-.review-author{font-size:11px;color:var(--text3);margin-top:6px}
+.svc-select-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 8px}
+.svc-opt{background:var(--bg2);border:.5px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;transition:all .15s}
+.svc-opt.selected{border-color:var(--acc);background:#1a1035}
+.svc-opt:active{transform:scale(.97)}
+.svc-opt-name{font-size:12px;font-weight:500;color:var(--text)}
+.svc-opt-price{font-size:11px;color:var(--acc);margin-top:2px}
 
-/* ── SLOTS ── */
-.slot-section{padding:0 12px 8px}
-.slot-date{font-size:12px;color:var(--text2);margin-bottom:6px;padding-left:2px}
-.slots-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.slot-btn{background:var(--bg3);border:.5px solid #3b3d6e;border-radius:20px;padding:7px 14px;font-size:13px;color:#a78bfa;cursor:pointer;transition:all .15s}
-.slot-btn:active{transform:scale(.95)}
-.slot-btn.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
-.slot-btn.taken{background:var(--bg);color:var(--text3);border-color:var(--border);cursor:not-allowed;text-decoration:line-through}
+.slots-wrap{padding:0 16px 12px}
+.day-group{margin-bottom:12px}
+.day-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.day-name{font-size:12px;font-weight:500;color:var(--text2)}
+.day-count{font-size:11px;color:var(--text3)}
+.times-row{display:flex;gap:6px;flex-wrap:wrap}
+.time-chip{background:var(--bg3);border:.5px solid var(--border2);border-radius:20px;padding:6px 12px;font-size:12px;color:var(--acc);cursor:pointer;transition:all .15s}
+.time-chip.selected{background:var(--acc);color:#000;border-color:var(--acc);font-weight:500}
+.time-chip.taken{color:var(--text3);border-color:var(--border);cursor:not-allowed;text-decoration:line-through}
+.time-chip:active:not(.taken){transform:scale(.95)}
 
-/* ── SELECTED SUMMARY ── */
-.summary-box{margin:0 12px 12px;background:var(--bg3);border-radius:14px;padding:14px;border:.5px solid #3b3d6e}
+.summary-box{margin:0 16px 12px;background:var(--bg2);border:.5px solid var(--border);border-radius:14px;padding:14px}
 .summary-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .summary-row:last-child{margin-bottom:0}
 .summary-label{font-size:12px;color:var(--text2)}
 .summary-val{font-size:13px;color:var(--text);font-weight:500}
-.summary-price{font-size:14px;color:#a78bfa;font-weight:600}
+.summary-price{font-size:14px;color:var(--acc);font-weight:600}
 
-/* ── BOOK BTN ── */
-.book-btn{margin:0 12px;width:calc(100% - 24px);background:linear-gradient(90deg,var(--accent),var(--accent2));border:none;border-radius:14px;padding:15px;font-size:15px;font-weight:600;color:#fff;cursor:pointer;transition:opacity .15s}
-.book-btn:active{opacity:.85}
-.book-btn:disabled{opacity:.5;cursor:not-allowed}
+.confirm-btn{margin:0 16px;width:calc(100% - 32px);background:linear-gradient(135deg,#7c3aed,#ec4899);border:none;border-radius:14px;padding:15px;font-size:15px;font-weight:500;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s}
+.confirm-btn:active{opacity:.85}
+.confirm-btn:disabled{opacity:.4;cursor:not-allowed}
 
-/* ── PROFILE ── */
-.profile-header{display:flex;flex-direction:column;align-items:center;padding:20px 0 16px}
-.profile-av{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:#fff;margin-bottom:10px}
-.profile-name{font-size:17px;font-weight:600}
+/* PROFILE */
+.profile-header{padding:24px 20px 16px;display:flex;align-items:center;gap:14px}
+.profile-av{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:18px;font-weight:600;color:#fff;flex-shrink:0}
+.profile-name{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:500;color:var(--text);letter-spacing:-.02em}
 .profile-sub{font-size:12px;color:var(--text2);margin-top:3px}
-.loyalty-bar-wrap{margin:0 12px 16px}
-.loyalty-bar-bg{background:var(--bg4);border-radius:10px;height:8px;overflow:hidden;margin:6px 0}
-.loyalty-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:10px;transition:width .5s}
-.loyalty-hint{font-size:11px;color:var(--text3)}
-.stats-row{display:flex;justify-content:space-around;background:var(--bg3);margin:0 12px 16px;border-radius:14px;padding:16px;border:.5px solid var(--border)}
-.stat-num{font-size:20px;font-weight:600;color:#a78bfa;text-align:center}
-.stat-label{font-size:10px;color:var(--text3);text-align:center;margin-top:3px}
 
-/* ── HISTORY ── */
-.hist-item{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:.5px solid var(--border)}
-.hist-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 16px}
+.stat-card{background:var(--bg2);border:.5px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:24px;font-weight:500;color:var(--acc);letter-spacing:-.02em}
+.stat-label{font-size:11px;color:var(--text3);margin-top:4px}
+
+.hist-list{padding:0 16px}
+.hist-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:.5px solid var(--border)}
+.hist-item:last-child{border:none}
+.hist-dot{width:8px;height:8px;border-radius:50%;background:var(--acc);flex-shrink:0;margin-right:10px}
+.hist-info{flex:1}
 .hist-name{font-size:13px;color:var(--text)}
 .hist-date{font-size:11px;color:var(--text3);margin-top:2px}
-.hist-price{font-size:13px;color:#a78bfa;margin-left:auto;white-space:nowrap}
+.hist-price{font-size:13px;color:var(--acc);font-weight:500}
+.hist-empty{font-size:13px;color:var(--text3);text-align:center;padding:32px 0;font-style:italic}
 
-/* ── UPCOMING ── */
-.upcoming-card{margin:0 12px 8px;background:var(--bg3);border-radius:14px;padding:14px;border:.5px solid #3b3d6e}
-.upcoming-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
-.upcoming-title{font-size:14px;font-weight:500}
-.badge{font-size:11px;padding:3px 10px;border-radius:20px}
-.badge.confirmed{background:#14532d;color:#86efac}
-.badge.pending{background:#1e3a5f;color:#60a5fa}
-.badge.cancelled{background:#450a0a;color:#fca5a5}
-.upcoming-detail{font-size:12px;color:var(--text2);margin-bottom:3px}
-.upcoming-actions{display:flex;gap:8px;margin-top:10px}
-.act-btn{flex:1;padding:8px;border-radius:10px;border:.5px solid var(--border);background:var(--bg4);color:var(--text2);font-size:12px;cursor:pointer;text-align:center;transition:all .15s}
-.act-btn.danger{border-color:#450a0a;color:#fca5a5;background:#1a0505}
-.act-btn.primary{border-color:#3b3d6e;color:#a78bfa;background:#1e1a35}
+/* ADMIN */
+.admin-header{padding:20px 20px 8px;display:flex;align-items:center;justify-content:space-between}
+.admin-title{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:500;color:var(--text);letter-spacing:-.02em}
+.admin-tabs{display:flex;gap:4px;padding:0 16px 12px;overflow-x:auto}
+.admin-tab{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;border:.5px solid var(--border);background:var(--bg2);white-space:nowrap;transition:all .15s;flex-shrink:0}
+.admin-tab.active{background:var(--acc);color:#000;border-color:var(--acc)}
 
-/* ── REFERRAL ── */
-.ref-box{margin:0 12px 16px;background:var(--bg3);border-radius:14px;padding:16px;border:.5px solid #3b3d6e;text-align:center}
-.ref-link{background:var(--bg);border-radius:10px;padding:10px;font-size:12px;color:#a78bfa;margin:10px 0;word-break:break-all;cursor:pointer;border:.5px solid var(--border)}
-.ref-copy-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:13px;cursor:pointer;width:100%}
+.admin-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;padding:0 16px 12px}
+.adm-stat{background:var(--bg2);border:.5px solid var(--border);border-radius:12px;padding:10px;text-align:center}
+.adm-stat-n{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:500;color:var(--acc)}
+.adm-stat-l{font-size:9px;color:var(--text3);margin-top:3px}
 
-/* ── ADMIN ── */
-.admin-card{margin:0 12px 8px;background:var(--bg3);border-radius:14px;padding:14px;border:.5px solid var(--border)}
-.admin-card-title{font-size:14px;font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.admin-input{width:100%;background:var(--bg);border:.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--text);margin-bottom:8px;outline:none}
-.admin-input:focus{border-color:var(--accent)}
-.admin-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;margin-bottom:6px}
-.admin-btn.danger{background:#7f1d1d}
-.admin-btn.secondary{background:var(--bg4);color:var(--text2)}
-.slot-list-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:.5px solid var(--border);font-size:13px}
-.slot-del{color:var(--danger);cursor:pointer;font-size:12px;padding:4px 8px}
-.price-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:.5px solid var(--border)}
-.price-svc{font-size:13px}
-.price-val{font-size:13px;color:#a78bfa;font-weight:500;cursor:pointer;padding:4px 8px;background:var(--bg);border-radius:6px;border:.5px solid var(--border)}
-.broadcast-btn{width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:14px;padding:14px;font-size:14px;font-weight:600;cursor:pointer}
-.admin-stat{text-align:center;background:var(--bg);border-radius:10px;padding:10px}
-.admin-stat-num{font-size:18px;font-weight:600;color:#a78bfa}
-.admin-stat-label{font-size:10px;color:var(--text3);margin-top:2px}
-.today-appointment{background:var(--bg);border-radius:10px;padding:10px;margin-bottom:6px}
-.today-name{font-size:13px;font-weight:500}
-.today-detail{font-size:12px;color:var(--text2);margin-top:3px}
-.today-time{font-size:12px;color:#a78bfa;margin-top:2px}
+.admin-section{display:none;padding:0 16px}
+.admin-section.active{display:block}
 
-/* ── MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;align-items:flex-end;justify-content:center}
+.appt-card{background:var(--bg2);border:.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px}
+.appt-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.appt-name{font-size:14px;font-weight:500;color:var(--text)}
+.appt-time{font-size:14px;color:var(--acc);font-weight:600}
+.appt-detail{font-size:12px;color:var(--text2)}
+.appt-svc{font-size:12px;color:var(--text3);margin-top:2px}
+.status-badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;margin-top:4px;display:inline-block}
+.status-new{background:#1e3a5f;color:#60a5fa}
+.status-ok{background:#14532d;color:#86efac}
+.status-cancelled{background:#450a0a;color:#fca5a5}
+
+.slots-admin{display:flex;flex-direction:column;gap:10px}
+.day-admin-group{background:var(--bg2);border:.5px solid var(--border);border-radius:12px;padding:12px}
+.day-admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.day-admin-name{font-size:13px;font-weight:500;color:var(--text)}
+.day-admin-count{font-size:11px;color:var(--text3)}
+.admin-times-row{display:flex;gap:5px;flex-wrap:wrap}
+.admin-time-chip{background:var(--bg4);border:.5px solid var(--border2);border-radius:16px;padding:5px 10px;font-size:11px;color:var(--acc);display:flex;align-items:center;gap:5px}
+.admin-time-chip.taken{color:var(--text3);border-color:var(--border)}
+.chip-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:0;line-height:1}
+
+.add-slot-form{background:var(--bg2);border:.5px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px}
+.add-slot-label{font-size:11px;color:var(--text3);margin-bottom:8px;letter-spacing:.06em;text-transform:uppercase}
+.add-slot-row{display:flex;gap:6px}
+.add-slot-inp{flex:1;background:var(--bg4);border:.5px solid var(--border2);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none}
+.add-slot-inp:focus{border-color:var(--acc)}
+.add-slot-inp::placeholder{color:var(--text3)}
+.add-slot-btn{background:var(--acc);border:none;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:500;color:#000;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap}
+
+.price-list{background:var(--bg2);border:.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.price-item{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:.5px solid var(--border)}
+.price-item:last-child{border:none}
+.price-name{font-size:13px;color:var(--text)}
+.price-val{font-size:13px;color:var(--acc);font-weight:500;background:var(--bg4);border:.5px solid var(--border2);border-radius:8px;padding:4px 10px;cursor:pointer;transition:border-color .15s}
+.price-val:hover{border-color:var(--acc)}
+
+.broadcast-box{background:var(--bg2);border:.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px}
+.broadcast-ta{width:100%;background:var(--bg4);border:.5px solid var(--border2);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;resize:none;min-height:100px;line-height:1.6}
+.broadcast-ta:focus{border-color:var(--acc)}
+.broadcast-ta::placeholder{color:var(--text3)}
+.broadcast-btn{width:100%;margin-top:8px;background:linear-gradient(135deg,#7c3aed,#ec4899);border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:500;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--acc);color:#000;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:opacity .3s;z-index:999;white-space:nowrap;pointer-events:none}
+.toast.show{opacity:1}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:flex-end;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal{background:var(--bg2);border-radius:24px 24px 0 0;padding:20px 16px 40px;width:100%;max-height:80vh;overflow-y:auto}
-.modal-title{font-size:16px;font-weight:600;margin-bottom:16px;text-align:center}
-.modal-input{width:100%;background:var(--bg3);border:.5px solid var(--border);border-radius:12px;padding:12px;font-size:14px;color:var(--text);outline:none;margin-bottom:10px}
-.modal-input:focus{border-color:var(--accent)}
-.modal-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:6px}
-.modal-cancel{width:100%;background:var(--bg3);color:var(--text2);border:none;border-radius:12px;padding:13px;font-size:14px;cursor:pointer}
-
-/* ── PORTFOLIO ── */
-.portfolio-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;padding:0 12px 12px}
-.portfolio-item{aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:28px;border:.5px solid var(--border)}
+.modal{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 16px 40px;width:100%;max-width:430px}
+.modal-title{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:500;margin-bottom:14px;text-align:center;color:var(--text)}
+.modal-inp{width:100%;background:var(--bg4);border:.5px solid var(--border2);border-radius:12px;padding:12px;font-size:14px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;margin-bottom:10px}
+.modal-inp:focus{border-color:var(--acc)}
+.modal-btn{width:100%;background:var(--acc);color:#000;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:6px;font-family:'DM Sans',sans-serif}
+.modal-cancel{width:100%;background:var(--bg4);color:var(--text2);border:none;border-radius:12px;padding:13px;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif}
 </style>
 </head>
 <body>
+<div class="app">
 
-<!-- ═══════ HOME ═══════ -->
-<div id="screen-home" class="screen active">
-  <div class="top-bar">
-    <div><h1 id="user-name">AKS Nails</h1><p>Мастер маникюра</p></div>
-    <div class="avatar" id="user-avatar">АК</div>
-  </div>
+<!-- HOME -->
+<div id="s-home" class="screen active">
   <div class="hero">
-    <h2>Запишитесь онлайн</h2>
-    <p>Свободные слоты на этой неделе.<br>Быстро и удобно.</p>
-    <button class="hero-btn" onclick="showScreen('booking')">Записаться →</button>
+    <div class="hero-avatar">N</div>
+    <div class="hero-name">Nails SNG</div>
+    <div class="hero-sub">Мастер маникюра</div>
+    <button class="hero-btn" onclick="goBook()">💅 Записаться</button>
   </div>
-  <div class="promo-banner">
-    <div class="promo-icon">🎁</div>
-    <div class="promo-text"><h3 id="promo-title">Акция!</h3><p id="promo-text">Маникюр + покрытие = скидка 15%</p></div>
-  </div>
-  <div class="sec-title">Услуги</div>
-  <div class="services-grid" id="home-services"></div>
-  <div class="sec-title" style="margin-top:8px">Отзывы <span onclick="showScreen('reviews')">Все →</span></div>
-  <div class="review-card">
-    <div class="review-stars">★★★★★</div>
-    <div class="review-text">Очень довольна! Мастер профессионал, маникюр держится уже 3 недели.</div>
-    <div class="review-author">— Анна М., 2 мая</div>
-  </div>
-  <div class="review-card">
-    <div class="review-stars">★★★★★</div>
-    <div class="review-text">Записалась через бот — очень удобно. Всё чисто, аккуратно, красиво.</div>
-    <div class="review-author">— Мария К., 28 апр</div>
-  </div>
-  <div style="height:8px"></div>
+  <div class="sec-label">Услуги</div>
+  <div class="svc-grid" id="home-services"></div>
 </div>
 
-<!-- ═══════ BOOKING ═══════ -->
-<div id="screen-booking" class="screen">
-  <div class="top-bar"><div><h1>Запись</h1><p>Выберите услугу и время</p></div></div>
-  <div class="sec-title">Услуга</div>
-  <div class="services-grid" id="booking-services"></div>
-  <div class="sec-title" style="margin-top:4px">Дата и время</div>
-  <div id="slots-container"></div>
-  <div class="summary-box" id="summary-box">
-    <div class="summary-row"><span class="summary-label">Услуга</span><span class="summary-val" id="sum-service">Не выбрана</span></div>
+<!-- BOOKING -->
+<div id="s-booking" class="screen">
+  <div class="booking-header">
+    <div class="booking-title">Запись</div>
+    <div class="booking-sub">Выберите услугу и время</div>
+  </div>
+  <div class="sec-label">Услуга</div>
+  <div class="svc-select-grid" id="booking-services"></div>
+  <div class="sec-label">Дата и время</div>
+  <div class="slots-wrap" id="slots-container"></div>
+  <div class="summary-box">
+    <div class="summary-row"><span class="summary-label">Услуга</span><span class="summary-val" id="sum-svc">Не выбрана</span></div>
     <div class="summary-row"><span class="summary-label">Время</span><span class="summary-val" id="sum-slot">Не выбрано</span></div>
     <div class="summary-row"><span class="summary-label">Стоимость</span><span class="summary-price" id="sum-price">—</span></div>
   </div>
-  <button class="book-btn" onclick="confirmBooking()">Подтвердить запись</button>
+  <button class="confirm-btn" onclick="confirmBooking()" id="confirm-btn" disabled>Подтвердить запись</button>
   <div style="height:12px"></div>
 </div>
 
-<!-- ═══════ PROFILE ═══════ -->
-<div id="screen-profile" class="screen">
+<!-- PROFILE -->
+<div id="s-profile" class="screen">
   <div class="profile-header">
-    <div class="profile-av" id="profile-av">АМ</div>
-    <div class="profile-name" id="profile-name">Клиент</div>
-    <div class="profile-sub" id="profile-sub">@username</div>
+    <div class="profile-av" id="prof-av">?</div>
+    <div>
+      <div class="profile-name" id="prof-name">Клиент</div>
+      <div class="profile-sub" id="prof-sub">@username</div>
+    </div>
   </div>
   <div class="stats-row">
-    <div><div class="stat-num" id="stat-visits">0</div><div class="stat-label">Визитов</div></div>
-    <div><div class="stat-num" id="stat-points">0</div><div class="stat-label">Баллов</div></div>
-    <div><div class="stat-num" id="stat-saved">0₽</div><div class="stat-label">Сэкономлено</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-visits">0</div><div class="stat-label">Визитов</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-upcoming">0</div><div class="stat-label">Предстоящих</div></div>
   </div>
-  <div class="loyalty-bar-wrap">
-    <div class="sec-title" style="padding:0 0 4px">Программа лояльности</div>
-    <div class="loyalty-bar-bg"><div class="loyalty-bar-fill" id="loyalty-fill" style="width:0%"></div></div>
-    <div class="loyalty-hint" id="loyalty-hint">До скидки 10% осталось 5 визитов</div>
-  </div>
-  <div class="sec-title">Предстоящие записи</div>
-  <div id="upcoming-list"></div>
-  <div class="sec-title">История визитов</div>
-  <div id="history-list">
-    <div class="hist-item"><div class="hist-dot"></div><div><div class="hist-name">Маникюр с покрытием</div><div class="hist-date">11 мая 2026</div></div><div class="hist-price">2800₽</div></div>
-    <div class="hist-item"><div class="hist-dot" style="background:var(--accent2)"></div><div><div class="hist-name">Педикюр классический</div><div class="hist-date">2 апр 2026</div></div><div class="hist-price">2300₽</div></div>
-    <div class="hist-item"><div class="hist-dot"></div><div><div class="hist-name">Наращивание 2ед</div><div class="hist-date">15 мар 2026</div></div><div class="hist-price">3500₽</div></div>
-  </div>
-  <div style="margin:16px 12px 8px">
-    <div class="sec-title" style="padding:0 0 8px">Реферальная ссылка</div>
-    <div class="ref-box">
-      <p style="font-size:13px;color:var(--text2)">Приведи подругу — получи бонусный балл!</p>
-      <div class="ref-link" id="ref-link" onclick="copyRef()">Загрузка...</div>
-      <button class="ref-copy-btn" onclick="copyRef()">📋 Скопировать ссылку</button>
-    </div>
-  </div>
-  <div style="height:8px"></div>
+  <div class="sec-label">История визитов</div>
+  <div class="hist-list" id="hist-list"></div>
 </div>
 
-<!-- ═══════ PORTFOLIO ═══════ -->
-<div id="screen-portfolio" class="screen">
-  <div class="top-bar"><div><h1>Портфолио</h1><p>Работы мастера</p></div></div>
-  <div class="sec-title">Последние работы</div>
-  <div class="portfolio-grid">
-    <div class="portfolio-item">💅</div><div class="portfolio-item">✨</div><div class="portfolio-item">💎</div>
-    <div class="portfolio-item">🌸</div><div class="portfolio-item">🦋</div><div class="portfolio-item">💅</div>
-    <div class="portfolio-item">✨</div><div class="portfolio-item">🌺</div><div class="portfolio-item">💎</div>
+<!-- ADMIN -->
+<div id="s-admin" class="screen">
+  <div class="admin-header">
+    <div class="admin-title">Админ</div>
   </div>
-  <div class="sec-title">Ссылки</div>
-  <div style="padding:0 12px 12px">
-    <div class="admin-card" style="cursor:pointer" onclick="openLink('https://instagram.com/')">
-      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">📸</span><div><div style="font-size:14px;font-weight:500">Instagram</div><div style="font-size:12px;color:var(--text2)" id="inst-link">@akssnails</div></div></div>
+  <div class="admin-tabs">
+    <div class="admin-tab active" onclick="switchAdminTab('appts')">Записи</div>
+    <div class="admin-tab" onclick="switchAdminTab('slots')">Слоты</div>
+    <div class="admin-tab" onclick="switchAdminTab('prices')">Цены</div>
+    <div class="admin-tab" onclick="switchAdminTab('broadcast')">Рассылка</div>
+  </div>
+  <div class="admin-stats">
+    <div class="adm-stat"><div class="adm-stat-n" id="adm-clients">0</div><div class="adm-stat-l">Клиентов</div></div>
+    <div class="adm-stat"><div class="adm-stat-n" id="adm-today">0</div><div class="adm-stat-l">Сегодня</div></div>
+    <div class="adm-stat"><div class="adm-stat-n" id="adm-revenue" style="color:var(--green)">0₽</div><div class="adm-stat-l">Выручка</div></div>
+  </div>
+  <div id="admin-appts" class="admin-section active"></div>
+  <div id="admin-slots" class="admin-section">
+    <div class="add-slot-form">
+      <div class="add-slot-label">Добавить слот</div>
+      <div class="add-slot-row">
+        <input class="add-slot-inp" id="new-date" placeholder="2026-06-01" style="max-width:130px">
+        <input class="add-slot-inp" id="new-time" placeholder="10:00" style="max-width:80px">
+        <button class="add-slot-btn" onclick="adminAddSlot()">+ Добавить</button>
+      </div>
     </div>
+    <div class="slots-admin" id="slots-admin-list"></div>
   </div>
-</div>
-
-<!-- ═══════ REVIEWS ═══════ -->
-<div id="screen-reviews" class="screen">
-  <div class="top-bar"><div><h1>Отзывы</h1><p>Мнения клиентов</p></div></div>
-  <div id="reviews-list">
-    <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">Очень довольна! Мастер профессионал, маникюр держится уже 3 недели.</div><div class="review-author">— Анна М., 2 мая</div></div>
-    <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">Записалась через бот — очень удобно. Всё чисто, аккуратно, красиво.</div><div class="review-author">— Мария К., 28 апр</div></div>
-    <div class="review-card"><div class="review-stars">★★★★☆</div><div class="review-text">Хорошая работа, буду возвращаться. Дизайн сделали именно как я хотела.</div><div class="review-author">— Елена С., 20 апр</div></div>
+  <div id="admin-prices" class="admin-section">
+    <div class="price-list" id="prices-list"></div>
   </div>
-  <div style="padding:12px">
-    <button class="book-btn" onclick="openReviewModal()">✍️ Оставить отзыв</button>
+  <div id="admin-broadcast" class="admin-section">
+    <div class="broadcast-box">
+      <textarea class="broadcast-ta" id="broadcast-text" placeholder="Текст рассылки..."></textarea>
+      <button class="broadcast-btn" onclick="sendBroadcast()">📢 Отправить всем клиентам</button>
+    </div>
   </div>
 </div>
 
-<!-- ═══════ ADMIN ═══════ -->
-<div id="screen-admin" class="screen">
-  <div class="top-bar"><div><h1>Админ панель</h1><p>Управление ботом</p></div></div>
-
-  <!-- Статистика -->
-  <div class="admin-card">
-    <div class="admin-card-title">📊 Статистика</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-      <div class="admin-stat"><div class="admin-stat-num" id="adm-clients">0</div><div class="admin-stat-label">Клиентов</div></div>
-      <div class="admin-stat"><div class="admin-stat-num" id="adm-bookings">0</div><div class="admin-stat-label">Записей</div></div>
-      <div class="admin-stat"><div class="admin-stat-num" id="adm-revenue">0₽</div><div class="admin-stat-label">Выручка</div></div>
-    </div>
-  </div>
-
-  <!-- Записи сегодня -->
-  <div class="admin-card">
-    <div class="admin-card-title">📅 Записи сегодня</div>
-    <div id="today-list"><div style="font-size:13px;color:var(--text3)">Нет записей</div></div>
-  </div>
-
-  <!-- Управление слотами -->
-  <div class="admin-card">
-    <div class="admin-card-title">🗓 Слоты</div>
-    <div id="slots-admin-list"></div>
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <input class="admin-input" id="new-slot-date" placeholder="2026-05-20" style="margin:0;flex:1">
-      <input class="admin-input" id="new-slot-time" placeholder="10:00" style="margin:0;width:80px">
-    </div>
-    <button class="admin-btn" style="margin-top:8px" onclick="adminAddSlot()">+ Добавить слот</button>
-  </div>
-
-  <!-- Управление ценами -->
-  <div class="admin-card">
-    <div class="admin-card-title">💰 Цены</div>
-    <div id="prices-admin-list"></div>
-  </div>
-
-  <!-- Акция -->
-  <div class="admin-card">
-    <div class="admin-card-title">🎁 Акция</div>
-    <input class="admin-input" id="promo-title-input" placeholder="Заголовок акции">
-    <input class="admin-input" id="promo-text-input" placeholder="Текст акции">
-    <button class="admin-btn" onclick="savePromo()">Сохранить акцию</button>
-  </div>
-
-  <!-- Портфолио ссылка -->
-  <div class="admin-card">
-    <div class="admin-card-title">📸 Instagram</div>
-    <input class="admin-input" id="inst-input" placeholder="@username или ссылка">
-    <button class="admin-btn" onclick="saveInst()">Сохранить</button>
-  </div>
-
-  <!-- Рассылка -->
-  <div class="admin-card">
-    <div class="admin-card-title">📢 Рассылка</div>
-    <textarea class="admin-input" id="broadcast-text" placeholder="Текст рассылки..." rows="3" style="resize:none"></textarea>
-    <button class="broadcast-btn" onclick="sendBroadcast()">📤 Отправить всем клиентам</button>
-  </div>
-
-  <div style="height:8px"></div>
 </div>
 
-<!-- ═══════ NAV ═══════ -->
+<!-- NAV -->
 <nav class="nav">
-  <div class="nav-item active" id="nav-home" onclick="showScreen('home')">
+  <div class="ni active" id="nav-home" onclick="showScreen('home')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     Главная
   </div>
-  <div class="nav-item" id="nav-booking" onclick="showScreen('booking')">
+  <div class="ni" id="nav-booking" onclick="showScreen('booking')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
     Запись
   </div>
-  <div class="nav-item" id="nav-portfolio" onclick="showScreen('portfolio')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-    Портфолио
-  </div>
-  <div class="nav-item" id="nav-profile" onclick="showScreen('profile')">
+  <div class="ni" id="nav-profile" onclick="showScreen('profile')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     Профиль
   </div>
-  <div class="nav-item" id="nav-admin" onclick="showScreen('admin')" style="display:none">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+  <div class="ni" id="nav-admin" onclick="showScreen('admin')" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
     Админ
   </div>
 </nav>
 
-<!-- ═══════ MODALS ═══════ -->
-<div class="modal-overlay" id="modal-review" onclick="closeModal('modal-review')">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-title">Оставить отзыв</div>
-    <div style="display:flex;gap:8px;margin-bottom:12px;justify-content:center;font-size:28px" id="star-row">
-      <span onclick="setStars(1)" style="cursor:pointer">★</span>
-      <span onclick="setStars(2)" style="cursor:pointer">★</span>
-      <span onclick="setStars(3)" style="cursor:pointer">★</span>
-      <span onclick="setStars(4)" style="cursor:pointer">★</span>
-      <span onclick="setStars(5)" style="cursor:pointer">★</span>
-    </div>
-    <textarea class="modal-input" id="review-text" placeholder="Напишите ваш отзыв..." rows="4" style="resize:none"></textarea>
-    <button class="modal-btn" onclick="submitReview()">Отправить отзыв</button>
-    <button class="modal-cancel" onclick="closeModal('modal-review')">Отмена</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-cancel" onclick="closeModal('modal-cancel')">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-title">Отменить запись?</div>
-    <div id="cancel-info" style="text-align:center;font-size:14px;color:var(--text2);margin-bottom:16px"></div>
-    <button class="modal-btn" style="background:#7f1d1d" onclick="confirmCancel()">Да, отменить</button>
-    <button class="modal-cancel" onclick="closeModal('modal-cancel')">Нет, оставить</button>
-  </div>
-</div>
-
+<!-- MODAL для изменения цены -->
 <div class="modal-overlay" id="modal-price" onclick="closeModal('modal-price')">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-title" id="modal-price-title">Изменить цену</div>
-    <input class="modal-input" id="modal-price-input" type="number" placeholder="Новая цена в рублях">
+    <input class="modal-inp" id="modal-price-inp" type="number" placeholder="Новая цена в рублях">
     <button class="modal-btn" onclick="savePrice()">Сохранить</button>
     <button class="modal-cancel" onclick="closeModal('modal-price')">Отмена</button>
   </div>
@@ -421,352 +312,307 @@ body{padding-bottom:75px}
 const tg = window.Telegram?.WebApp;
 if(tg){tg.ready();tg.expand()}
 
-// ── ДАННЫЕ ──
 const ADMIN_IDS = [];
-let currentUser = null;
-let selectedService = null;
-let selectedSlot = null;
-let selectedStars = 5;
-let cancelTarget = null;
-let editPriceTarget = null;
+const LS = 'nails-sng-v2';
 
 const SERVICES = [
-  {emoji:'💅',name:'Маникюр с покрытием',price:2800,time:60},
-  {emoji:'🤍',name:'Маникюр без покрытия',price:2000,time:45},
-  {emoji:'🦶',name:'Педикюр (пальчики)',price:2300,time:75},
-  {emoji:'🦶',name:'Педикюр со стопами',price:2800,time:90},
-  {emoji:'💎',name:'Наращивание',price:3500,time:120},
-  {emoji:'✂️',name:'Коррекция',price:3300,time:90},
-  {emoji:'✨',name:'Дизайн (1 ноготь)',price:300,time:15},
-  {emoji:'🌸',name:'Дизайн (все ногти)',price:1500,time:45},
-  {emoji:'💪',name:'Мужской маникюр',price:2000,time:50},
+  {emoji:'💅',name:'Маникюр',price:2500,time:60},
+  {emoji:'🦶',name:'Педикюр',price:3500,time:75},
+  {emoji:'💎',name:'Наращивание',price:4500,time:120},
+  {emoji:'✨',name:'Гель-лак',price:3000,time:60},
 ];
 
-let SLOTS = [
-  '2026-05-20 10:00','2026-05-20 12:00','2026-05-20 14:00','2026-05-20 16:00',
-  '2026-05-21 10:00','2026-05-21 12:00','2026-05-21 14:00',
-  '2026-05-22 11:00','2026-05-22 13:00','2026-05-22 15:00',
-];
+let state = {
+  slots: [
+    '2026-05-26 10:00','2026-05-26 12:00','2026-05-26 14:00','2026-05-26 16:00',
+    '2026-05-27 10:00','2026-05-27 13:00','2026-05-27 15:00',
+    '2026-05-28 10:00','2026-05-28 11:00','2026-05-28 15:00',
+    '2026-05-29 10:00','2026-05-29 12:00','2026-05-29 14:00',
+    '2026-05-30 10:00','2026-05-30 12:00','2026-05-30 14:00',
+  ],
+  bookings: [],
+  prices: {},
+  currentUser: null,
+};
 
-let PRICES = {};
-SERVICES.forEach(s=>PRICES[s.name]=s.price);
+SERVICES.forEach(s => state.prices[s.name] = s.price);
 
-let PROMO = {title:'Акция мая!',text:'Маникюр + покрытие = скидка 15%'};
-let INSTAGRAM = '@akssnails';
+function loadState(){
+  try{const s=localStorage.getItem(LS);if(s){const d=JSON.parse(s);state.slots=d.slots||state.slots;state.bookings=d.bookings||[];state.prices=d.prices||state.prices;}}catch(e){}
+}
+function saveState(){
+  try{localStorage.setItem(LS,JSON.stringify({slots:state.slots,bookings:state.bookings,prices:state.prices}));}catch(e){}
+}
 
-let BOOKINGS = [];
-let REVIEWS = [];
-let USER_DATA = {visits:0,points:0,saved:0};
+let selService=null, selSlot=null, editPriceTarget=null;
 
-// ── INIT ──
-window.onload = () => {
+window.onload=()=>{
+  loadState();
   if(tg){
-    const u = tg.initDataUnsafe?.user;
+    const u=tg.initDataUnsafe?.user;
     if(u){
-      currentUser = u;
-      const name = u.first_name + (u.last_name?' '+u.last_name:'');
-      const ini = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-      document.getElementById('user-name').textContent = 'Привет, '+u.first_name+'!';
-      document.getElementById('user-avatar').textContent = ini;
-      document.getElementById('profile-av').textContent = ini;
-      document.getElementById('profile-name').textContent = name;
-      document.getElementById('profile-sub').textContent = u.username?'@'+u.username:'';
+      state.currentUser=u;
+      const name=u.first_name+(u.last_name?' '+u.last_name:'');
+      const ini=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      document.getElementById('prof-av').textContent=ini;
+      document.getElementById('prof-name').textContent=name;
+      document.getElementById('prof-sub').textContent=u.username?'@'+u.username:'';
       if(ADMIN_IDS.includes(u.id)) document.getElementById('nav-admin').style.display='flex';
     }
   }
-  renderServices();
-  renderSlots();
-  renderProfile();
-  renderAdmin();
-  renderPromo();
+  renderAll();
 };
 
-function renderPromo(){
-  document.getElementById('promo-title').textContent = PROMO.title;
-  document.getElementById('promo-text').textContent = PROMO.text;
-  document.getElementById('inst-link').textContent = INSTAGRAM;
-}
-
-// ── SCREENS ──
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  const nav = document.getElementById('nav-'+name);
-  if(nav) nav.classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('s-'+name).classList.add('active');
+  document.getElementById('nav-'+name)?.classList.add('active');
   window.scrollTo(0,0);
   if(name==='profile') renderProfile();
   if(name==='admin') renderAdmin();
 }
 
-// ── SERVICES ──
-function renderServices(){
-  const grid1 = document.getElementById('home-services');
-  const grid2 = document.getElementById('booking-services');
-  const html = SERVICES.map(s=>`
-    <div class="svc ${selectedService?.name===s.name?'selected':''}" onclick="selectService('${s.name}')">
+function goBook(){showScreen('booking')}
+
+function renderAll(){
+  renderHome();
+  renderBooking();
+  renderProfile();
+}
+
+const months=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+const days=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+
+function fmtSlot(slot){
+  const[d,t]=slot.split(' ');
+  const dt=new Date(d);
+  return `${days[dt.getDay()]}, ${dt.getDate()} ${months[dt.getMonth()]} в ${t}`;
+}
+
+function fmtDate(d){
+  const dt=new Date(d);
+  return `${days[dt.getDay()]}, ${dt.getDate()} ${months[dt.getMonth()]}`;
+}
+
+function renderHome(){
+  const grid=document.getElementById('home-services');
+  grid.innerHTML=SERVICES.map(s=>`
+    <div class="svc-card" onclick="selSvcAndBook('${s.name}')">
       <div class="svc-emoji">${s.emoji}</div>
       <div class="svc-name">${s.name}</div>
-      <div class="svc-price">${(PRICES[s.name]||s.price).toLocaleString()}₽</div>
+      <div class="svc-price">${(state.prices[s.name]||s.price).toLocaleString()}₽</div>
       <div class="svc-time">${s.time} мин</div>
     </div>`).join('');
-  grid1.innerHTML = html;
-  grid2.innerHTML = html;
+}
+
+function selSvcAndBook(name){
+  selService=SERVICES.find(s=>s.name===name);
+  showScreen('booking');
+  renderBooking();
+}
+
+function renderBooking(){
+  const sg=document.getElementById('booking-services');
+  sg.innerHTML=SERVICES.map(s=>`
+    <div class="svc-opt ${selService?.name===s.name?'selected':''}" onclick="selectService('${s.name}')">
+      <div class="svc-opt-name">${s.emoji} ${s.name}</div>
+      <div class="svc-opt-price">${(state.prices[s.name]||s.price).toLocaleString()}₽</div>
+    </div>`).join('');
+  renderSlots();
+  updateSummary();
 }
 
 function selectService(name){
-  const svc = SERVICES.find(s=>s.name===name);
-  if(!svc) return;
-  selectedService = {...svc, price: PRICES[name]||svc.price};
-  renderServices();
-  updateSummary();
-  showScreen('booking');
+  selService=SERVICES.find(s=>s.name===name);
+  renderBooking();
 }
 
-// ── SLOTS ──
 function renderSlots(){
-  const c = document.getElementById('slots-container');
-  if(!SLOTS.length){c.innerHTML='<div style="padding:0 12px 12px;font-size:13px;color:var(--text3)">Нет свободных слотов</div>';return}
-  const taken = BOOKINGS.map(b=>b.slot);
-  const grouped = {};
-  SLOTS.forEach(s=>{
-    const[d,t]=s.split(' ');
+  const taken=state.bookings.filter(b=>b.status!=='cancelled').map(b=>b.slot);
+  const free=state.slots.filter(s=>!taken.includes(s));
+  const grouped={};
+  free.forEach(s=>{
+    const d=s.split(' ')[0];
     if(!grouped[d]) grouped[d]=[];
-    grouped[d].push({time:t,slot:s,taken:taken.includes(s)});
+    grouped[d].push(s.split(' ')[1]);
   });
-  const days=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-  const months=['','янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-  let html='';
-  Object.entries(grouped).forEach(([date,times])=>{
-    const dt=new Date(date);
-    const label=`${days[dt.getDay()]}, ${dt.getDate()} ${months[dt.getMonth()+1]}`;
-    html+=`<div class="slot-section"><div class="slot-date">${label}</div><div class="slots-row">`;
-    times.forEach(({time,slot,taken})=>{
-      html+=`<div class="slot-btn${taken?' taken':''}${selectedSlot===slot?' selected':''}" onclick="${taken?'':`selectSlot(this,'${slot}')`}">${time}</div>`;
-    });
-    html+='</div></div>';
-  });
-  c.innerHTML=html;
+  const el=document.getElementById('slots-container');
+  if(!Object.keys(grouped).length){el.innerHTML='<div style="font-size:13px;color:var(--text3);padding:0 4px 12px">Нет свободных слотов</div>';return;}
+  el.innerHTML=Object.entries(grouped).map(([date,times])=>`
+    <div class="day-group">
+      <div class="day-header">
+        <span class="day-name">${fmtDate(date)}</span>
+        <span class="day-count">${times.length} слота</span>
+      </div>
+      <div class="times-row">
+        ${times.map(t=>{const slot=date+' '+t;return`<div class="time-chip ${selSlot===slot?'selected':''}" onclick="selectSlot('${slot}')">${t}</div>`}).join('')}
+      </div>
+    </div>`).join('');
 }
 
-function selectSlot(el,slot){
-  document.querySelectorAll('.slot-btn').forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedSlot=slot;
+function selectSlot(slot){
+  selSlot=slot;
+  renderSlots();
   updateSummary();
 }
 
 function updateSummary(){
-  document.getElementById('sum-service').textContent = selectedService?selectedService.name:'Не выбрана';
-  document.getElementById('sum-price').textContent = selectedService?(selectedService.price).toLocaleString()+'₽':'—';
-  if(selectedSlot){
-    const[d,t]=selectedSlot.split(' ');
-    const dt=new Date(d);
-    const months=['','янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-    document.getElementById('sum-slot').textContent=`${dt.getDate()} ${months[dt.getMonth()+1]} в ${t}`;
-  } else {
-    document.getElementById('sum-slot').textContent='Не выбрано';
-  }
+  document.getElementById('sum-svc').textContent=selService?selService.name:'Не выбрана';
+  document.getElementById('sum-price').textContent=selService?(state.prices[selService.name]||selService.price).toLocaleString()+'₽':'—';
+  document.getElementById('sum-slot').textContent=selSlot?fmtSlot(selSlot):'Не выбрано';
+  document.getElementById('confirm-btn').disabled=!(selService&&selSlot);
 }
 
 function confirmBooking(){
-  if(!selectedService){showToast('Выберите услугу!');return}
-  if(!selectedSlot){showToast('Выберите время!');return}
-  const booking={id:Date.now(),service:selectedService.name,price:selectedService.price,slot:selectedSlot,status:'pending',user:'Вы'};
-  BOOKINGS.push(booking);
-  USER_DATA.visits++;
-  USER_DATA.points++;
-  renderSlots();
-  renderProfile();
+  if(!selService||!selSlot) return;
+  const uid=state.currentUser?.id||'demo';
+  const b={id:Date.now(),userId:uid,service:selService.name,price:state.prices[selService.name]||selService.price,slot:selSlot,status:'new',date:new Date().toISOString()};
+  state.bookings.push(b);
+  saveState();
+  if(tg) tg.sendData(JSON.stringify({action:'book',service:b.service,price:b.price,slot:b.slot}));
   showToast('✅ Запись подтверждена!');
-  if(tg) tg.sendData(JSON.stringify({action:'book',service:selectedService.name,price:selectedService.price,slot:selectedSlot}));
-  selectedService=null;
-  selectedSlot=null;
-  updateSummary();
-  renderServices();
+  selService=null;selSlot=null;
+  renderBooking();
   setTimeout(()=>showScreen('profile'),1200);
 }
 
-// ── PROFILE ──
 function renderProfile(){
-  document.getElementById('stat-visits').textContent = USER_DATA.visits;
-  document.getElementById('stat-points').textContent = USER_DATA.points;
-  document.getElementById('stat-saved').textContent = USER_DATA.saved+'₽';
-  const pct = Math.min((USER_DATA.visits/5)*100,100);
-  document.getElementById('loyalty-fill').style.width = pct+'%';
-  const left = Math.max(5-USER_DATA.visits,0);
-  document.getElementById('loyalty-hint').textContent = left>0?`До скидки 10% осталось ${left} визитов`:'🎉 Скидка 10% активна!';
-  const botName = 'sngnails_bot';
-  const userId = currentUser?.id||'demo';
-  document.getElementById('ref-link').textContent = `https://t.me/${botName}?start=ref_${userId}`;
-  const up = BOOKINGS.filter(b=>b.status!=='cancelled');
-  const ul = document.getElementById('upcoming-list');
-  if(!up.length){ul.innerHTML='<div style="padding:0 16px 12px;font-size:13px;color:var(--text3)">Нет предстоящих записей</div>';return}
-  ul.innerHTML = up.map(b=>{
-    const[d,t]=b.slot.split(' ');
-    const dt=new Date(d);
-    const months=['','янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-    const dateStr=`${dt.getDate()} ${months[dt.getMonth()+1]} в ${t}`;
-    return `<div class="upcoming-card">
-      <div class="upcoming-header">
-        <div class="upcoming-title">${b.service}</div>
-        <div class="badge ${b.status==='confirmed'?'confirmed':'pending'}">${b.status==='confirmed'?'Подтверждена':'Ожидает'}</div>
+  const uid=String(state.currentUser?.id||'demo');
+  const myBookings=state.bookings.filter(b=>String(b.userId)===uid);
+  const completed=myBookings.filter(b=>b.status==='done').length;
+  const upcoming=myBookings.filter(b=>b.status==='new'||b.status==='confirmed').length;
+  document.getElementById('stat-visits').textContent=completed;
+  document.getElementById('stat-upcoming').textContent=upcoming;
+  const hist=myBookings.filter(b=>b.status==='done').reverse();
+  const el=document.getElementById('hist-list');
+  el.innerHTML=hist.length?hist.map(b=>`
+    <div class="hist-item">
+      <div class="hist-dot"></div>
+      <div class="hist-info">
+        <div class="hist-name">${b.service}</div>
+        <div class="hist-date">${fmtSlot(b.slot)}</div>
       </div>
-      <div class="upcoming-detail">📅 ${dateStr}</div>
-      <div class="upcoming-detail">💰 ${b.price.toLocaleString()}₽</div>
-      <div class="upcoming-actions">
-        <div class="act-btn primary" onclick="reschedule(${b.id})">🔄 Перенести</div>
-        <div class="act-btn danger" onclick="openCancel(${b.id})">❌ Отменить</div>
-      </div>
-    </div>`;
-  }).join('');
+      <div class="hist-price">${(b.price||0).toLocaleString()}₽</div>
+    </div>`).join(''):'<div class="hist-empty">История визитов пуста</div>';
 }
 
-// ── CANCEL ──
-function openCancel(id){
-  cancelTarget=id;
-  const b=BOOKINGS.find(x=>x.id===id);
-  if(!b) return;
-  const[d,t]=b.slot.split(' ');
-  document.getElementById('cancel-info').textContent=`${b.service} · ${d} в ${t}`;
-  document.getElementById('modal-cancel').classList.add('open');
+function switchAdminTab(tab){
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'));
+  const tabs=['appts','slots','prices','broadcast'];
+  document.querySelectorAll('.admin-tab')[tabs.indexOf(tab)].classList.add('active');
+  document.getElementById('admin-'+tab).classList.add('active');
+  if(tab==='slots') renderAdminSlots();
+  if(tab==='prices') renderAdminPrices();
 }
 
-function confirmCancel(){
-  if(cancelTarget){
-    const b=BOOKINGS.find(x=>x.id===cancelTarget);
-    if(b){b.status='cancelled';USER_DATA.visits=Math.max(0,USER_DATA.visits-1);USER_DATA.points=Math.max(0,USER_DATA.points-1);}
-  }
-  closeModal('modal-cancel');
-  renderSlots();
-  renderProfile();
-  showToast('Запись отменена');
-}
-
-function reschedule(id){
-  const b=BOOKINGS.find(x=>x.id===id);
-  if(!b) return;
-  b.status='cancelled';
-  selectedService=SERVICES.find(s=>s.name===b.service);
-  renderServices();
-  renderSlots();
-  renderProfile();
-  showScreen('booking');
-  showToast('Выберите новое время');
-}
-
-// ── REVIEW ──
-function openReviewModal(){document.getElementById('modal-review').classList.add('open')}
-function setStars(n){
-  selectedStars=n;
-  const stars=document.getElementById('star-row').querySelectorAll('span');
-  stars.forEach((s,i)=>{s.style.color=i<n?'#f59e0b':'var(--text3)'});
-}
-
-function submitReview(){
-  const text=document.getElementById('review-text').value.trim();
-  if(!text){showToast('Напишите отзыв!');return}
-  const name=currentUser?.first_name||'Клиент';
-  const rev={stars:selectedStars,text,author:name,date:'сегодня'};
-  REVIEWS.push(rev);
-  const list=document.getElementById('reviews-list');
-  const div=document.createElement('div');
-  div.className='review-card';
-  div.innerHTML=`<div class="review-stars">${'★'.repeat(rev.stars)}${'☆'.repeat(5-rev.stars)}</div><div class="review-text">${rev.text}</div><div class="review-author">— ${rev.author}, ${rev.date}</div>`;
-  list.prepend(div);
-  closeModal('modal-review');
-  showToast('Спасибо за отзыв! ⭐');
-  document.getElementById('review-text').value='';
-}
-
-// ── ADMIN ──
 function renderAdmin(){
-  const clients = new Set(BOOKINGS.map(b=>b.user)).size;
-  const revenue = BOOKINGS.filter(b=>b.status!=='cancelled').reduce((s,b)=>s+b.price,0);
-  document.getElementById('adm-clients').textContent = clients||0;
-  document.getElementById('adm-bookings').textContent = BOOKINGS.length;
-  document.getElementById('adm-revenue').textContent = revenue.toLocaleString()+'₽';
   const today=new Date().toISOString().split('T')[0];
-  const todayB=BOOKINGS.filter(b=>b.slot.startsWith(today)&&b.status!=='cancelled');
-  const tl=document.getElementById('today-list');
-  tl.innerHTML=todayB.length?todayB.map(b=>`<div class="today-appointment"><div class="today-name">${b.user}</div><div class="today-detail">💅 ${b.service} · ${b.price.toLocaleString()}₽</div><div class="today-time">🕐 ${b.slot.split(' ')[1]}</div></div>`).join(''):'<div style="font-size:13px;color:var(--text3)">Нет записей</div>';
-  const sl=document.getElementById('slots-admin-list');
-  sl.innerHTML=SLOTS.length?SLOTS.map(s=>`<div class="slot-list-item"><span>${s}</span><span class="slot-del" onclick="adminDelSlot('${s}')">Удалить</span></div>`).join(''):'<div style="font-size:13px;color:var(--text3);margin-bottom:8px">Нет слотов</div>';
-  const pl=document.getElementById('prices-admin-list');
-  pl.innerHTML=SERVICES.map(s=>`<div class="price-row"><span class="price-svc">${s.emoji} ${s.name}</span><span class="price-val" onclick="openEditPrice('${s.name}')">${(PRICES[s.name]||s.price).toLocaleString()}₽</span></div>`).join('');
-  document.getElementById('promo-title-input').value=PROMO.title;
-  document.getElementById('promo-text-input').value=PROMO.text;
-  document.getElementById('inst-input').value=INSTAGRAM;
+  const todayB=state.bookings.filter(b=>b.slot.startsWith(today)&&b.status!=='cancelled');
+  const clients=new Set(state.bookings.map(b=>b.userId)).size;
+  const revenue=state.bookings.filter(b=>b.status==='done').reduce((s,b)=>s+(b.price||0),0);
+  document.getElementById('adm-clients').textContent=clients;
+  document.getElementById('adm-today').textContent=todayB.length;
+  document.getElementById('adm-revenue').textContent=revenue.toLocaleString()+'₽';
+  const el=document.getElementById('admin-appts');
+  const all=state.bookings.filter(b=>b.status!=='cancelled').reverse();
+  el.innerHTML=all.length?all.map(b=>`
+    <div class="appt-card">
+      <div class="appt-head">
+        <div><div class="appt-name">${b.userId}</div><div class="appt-detail">${b.service}</div></div>
+        <div style="text-align:right"><div class="appt-time">${b.slot.split(' ')[1]}</div><div class="appt-svc">${b.slot.split(' ')[0]}</div></div>
+      </div>
+      <span class="status-badge ${b.status==='new'?'status-new':b.status==='done'?'status-ok':'status-new'}">${b.status==='new'?'Новая':b.status==='done'?'Выполнена':'Подтверждена'}</span>
+    </div>`).join(''):'<div style="font-size:13px;color:var(--text3);text-align:center;padding:24px">Нет записей</div>';
+  renderAdminSlots();
+  renderAdminPrices();
+}
+
+function renderAdminSlots(){
+  const taken=state.bookings.filter(b=>b.status!=='cancelled').map(b=>b.slot);
+  const grouped={};
+  state.slots.forEach(s=>{
+    const d=s.split(' ')[0];
+    if(!grouped[d]) grouped[d]=[];
+    grouped[d].push({time:s.split(' ')[1],slot:s,taken:taken.includes(s)});
+  });
+  const el=document.getElementById('slots-admin-list');
+  el.innerHTML=Object.entries(grouped).map(([date,times])=>`
+    <div class="day-admin-group">
+      <div class="day-admin-header">
+        <span class="day-admin-name">${fmtDate(date)}</span>
+        <span class="day-admin-count">${times.length} слотов</span>
+      </div>
+      <div class="admin-times-row">
+        ${times.map(({time,slot,taken})=>`
+          <div class="admin-time-chip ${taken?'taken':''}">
+            ${time}
+            ${!taken?`<button class="chip-del" onclick="deleteSlot('${slot}')" title="Удалить">×</button>`:''}
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function deleteSlot(slot){
+  state.slots=state.slots.filter(s=>s!==slot);
+  saveState();
+  renderAdminSlots();
+  renderSlots();
+  showToast('Слот удалён');
 }
 
 function adminAddSlot(){
-  const d=document.getElementById('new-slot-date').value.trim();
-  const t=document.getElementById('new-slot-time').value.trim();
-  if(!d||!t){showToast('Введите дату и время');return}
+  const d=document.getElementById('new-date').value.trim();
+  const t=document.getElementById('new-time').value.trim();
+  if(!d||!t){showToast('Введите дату и время');return;}
   const slot=d+' '+t;
-  if(SLOTS.includes(slot)){showToast('Слот уже существует');return}
-  SLOTS.push(slot);
-  SLOTS.sort();
-  document.getElementById('new-slot-date').value='';
-  document.getElementById('new-slot-time').value='';
-  renderAdmin();
+  if(state.slots.includes(slot)){showToast('Слот уже существует');return;}
+  state.slots.push(slot);
+  state.slots.sort();
+  document.getElementById('new-date').value='';
+  document.getElementById('new-time').value='';
+  saveState();
+  renderAdminSlots();
   renderSlots();
-  showToast('✅ Слот добавлен: '+slot);
+  showToast('✅ Слот добавлен');
 }
 
-function adminDelSlot(slot){
-  SLOTS=SLOTS.filter(s=>s!==slot);
-  renderAdmin();
-  renderSlots();
-  showToast('Слот удалён');
+function renderAdminPrices(){
+  const el=document.getElementById('prices-list');
+  el.innerHTML=SERVICES.map(s=>`
+    <div class="price-item">
+      <span class="price-name">${s.emoji} ${s.name}</span>
+      <span class="price-val" onclick="openEditPrice('${s.name}')">${(state.prices[s.name]||s.price).toLocaleString()}₽</span>
+    </div>`).join('');
 }
 
 function openEditPrice(name){
   editPriceTarget=name;
   document.getElementById('modal-price-title').textContent='Цена: '+name;
-  document.getElementById('modal-price-input').value=PRICES[name]||'';
+  document.getElementById('modal-price-inp').value=state.prices[name]||'';
   document.getElementById('modal-price').classList.add('open');
 }
 
 function savePrice(){
-  const val=parseInt(document.getElementById('modal-price-input').value);
-  if(!val||val<0){showToast('Введите корректную цену');return}
-  PRICES[editPriceTarget]=val;
+  const val=parseInt(document.getElementById('modal-price-inp').value);
+  if(!val||val<0){showToast('Введите корректную цену');return;}
+  state.prices[editPriceTarget]=val;
+  saveState();
   closeModal('modal-price');
-  renderAdmin();
-  renderServices();
-  showToast('✅ Цена обновлена: '+val.toLocaleString()+'₽');
-}
-
-function savePromo(){
-  PROMO.title=document.getElementById('promo-title-input').value||PROMO.title;
-  PROMO.text=document.getElementById('promo-text-input').value||PROMO.text;
-  renderPromo();
-  showToast('✅ Акция обновлена');
-}
-
-function saveInst(){
-  INSTAGRAM=document.getElementById('inst-input').value||INSTAGRAM;
-  renderPromo();
-  showToast('✅ Instagram обновлён');
+  renderAdminPrices();
+  renderHome();
+  renderBooking();
+  showToast('✅ Цена обновлена');
 }
 
 function sendBroadcast(){
   const text=document.getElementById('broadcast-text').value.trim();
-  if(!text){showToast('Введите текст рассылки');return}
+  if(!text){showToast('Введите текст');return;}
   if(tg) tg.sendData(JSON.stringify({action:'broadcast',text}));
   document.getElementById('broadcast-text').value='';
-  showToast('📤 Рассылка отправлена!');
+  showToast('📢 Рассылка отправлена!');
 }
-
-// ── UTILS ──
-function copyRef(){
-  const link=document.getElementById('ref-link').textContent;
-  navigator.clipboard?.writeText(link).catch(()=>{});
-  showToast('📋 Ссылка скопирована!');
-}
-
-function openLink(url){if(tg) tg.openLink(url); else window.open(url,'_blank')}
 
 function closeModal(id){document.getElementById(id).classList.remove('open')}
 
